@@ -1,5 +1,7 @@
 package com.shizc.docker;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -23,7 +25,7 @@ public class DockerApplication {
     private DataSource dataSource;
 
     @GetMapping("/")
-    public String getDataSource() throws SQLException {
-        return "mysql的Schema是" + dataSource.getConnection().getSchema();
+    public String getDataSource() throws SQLException, JsonProcessingException {
+        return "数据库的连接元数据信息是: " + new ObjectMapper().writeValueAsString(dataSource.getConnection().getMetaData());
     }
 }
