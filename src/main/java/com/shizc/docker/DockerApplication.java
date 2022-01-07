@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.sql.DataSource;
+import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
 @SpringBootApplication
@@ -25,7 +26,8 @@ public class DockerApplication {
     private DataSource dataSource;
 
     @GetMapping("/")
-    public String getDataSource() throws SQLException, JsonProcessingException {
-        return "数据库的连接元数据信息是: " + new ObjectMapper().writeValueAsString(dataSource.getConnection().getMetaData());
+    public String getDataSource() throws SQLException {
+        DatabaseMetaData metaData = dataSource.getConnection().getMetaData();
+        return "数据库的连接地址是: " + metaData.getURL() + ", 数据库的用户名是" + metaData.getUserName() + ",数据库的驱动是" + metaData.getDriverName();
     }
 }
