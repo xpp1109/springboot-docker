@@ -53,6 +53,3 @@
     </build>
 
 </project>
-        git remote add origin https://github.com/xpp1109/springboot-docker.git
-        git branch -M main
-        git push -u origin main

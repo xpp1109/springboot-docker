@@ -1,17 +1,22 @@
 version: '3'
 services:
   docker-web:
+    container_name: docker-web
+    restart: always
+    image: shizc_docker_web:v1
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
     links:
-      - docker-db:docker-db
+      - docker-db
+    depends_on:
+      - docker-db
   docker-db:
+    container_name: docker-db
     image: mysql:8.0.27
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-
